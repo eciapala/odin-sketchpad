@@ -1,45 +1,31 @@
-var size = 16;
-var height = 400;
-var width =  650;
+$(document).ready(function(){
+  makeGrid(16);
 
-function clearPad() {
-
-}
-
-function makeGrid() {
-  for( var i = 0; i < height; i++) {
-    for var j = 0; j < width; j++) {
-      $("<div class="gridhovered"></div>").appentTo(".cointainer");
-    }
-  }
-  $('.gridhovered').css({'width': size, 'height': size});
-}
-
-function gridSize() {
-  var size = prompt("Please enter grid size between 1 and 40.");
-  if (size >= 1 && size <= 40) {
-
-  }
-  else if (size == null || size == "") {
-    size = 16;
-    alert("User cancelled the prompt.");
-  }
-  else {
-    size = 16;
-    alert("You entered wrong number.");
-  }
-}
-
-$(document).ready(function() {
-
-  $(".container").mouseover(function() {
-    makeGrid();
-    });
-  $("#clear").click(function() {
+  $("#clear").click(function(){
     clearPad();
   });
 
-  $("#grid").click(function() {
-    gridSize();
+  $("#grid").click(function(){
+    makeGrid();
   });
 });
+
+function makeGrid(size){
+  if(!size){
+    size = prompt("Please enter grid size: ");
+  }
+  $("#pad").empty();
+  for(let i = 0; i  < Math.pow(size, 2); i++){
+		$('#pad').append('<div class="square"></div>');
+	}
+	$('.square').width(650/size);
+	$('.square').height(400/size);
+	$('.square').mouseenter(function(){
+		$(this).css('background-color', 'black');
+  });
+}
+
+function clearPad() {
+  var con = confirm("Are you sure?");
+  $('.square').css('background-color', 'f2f2f2');
+}
